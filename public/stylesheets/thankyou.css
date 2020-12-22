@@ -1,0 +1,14 @@
+body{
+	height:100vh;
+	background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+	url("https://i.pinimg.com/originals/bc/92/50/bc9250f07c782a74c79c42f567fbeecd.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+	background-size:cover;
+	background-position:center;
+}
+.password{
+	height: 23px;
+	width: 23px;
+	border-radius: 6px;
+}

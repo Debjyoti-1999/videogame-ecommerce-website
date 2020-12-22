@@ -1,0 +1,28 @@
+<%layout('./layout.ejs')%>
+<%let c=0%>
+<%for(var i=0;i<products.length;i++){%>
+ <div class="row">
+ <%for(var j=0;j<products[i].length;j++){%>
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <a href="/show?id=<%-products[i][j]._id%>"><img src="<%-products[i][j].imagePath%>"></a>
+      <div class="caption">
+        <h3><%-products[i][j].title%></h3>
+        <p class='genre'><%-products[i][j].genre%></p>
+          <h6>
+            <p class="starability-result" data-rating="<%-Math.round(stars[c])%>">
+            </p>
+          </h6>
+          <%c++%>
+        <p class="price">
+        $<%-products[i][j].price%>
+        <%if(login){%>
+          <a href="/add-to-cart/<%-products[i][j]._id%>?pg=1" class="btn btn-success" role="button">Add to cart</a>
+        <%}%>
+        </p>
+      </div>
+    </div>
+  </div>
+ <%}%>
+ </div>
+<%}%>

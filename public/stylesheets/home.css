@@ -1,0 +1,11 @@
+body{
+	height:100vh;
+	background-image: linear-gradient(rgba(1,1,1,0.5),rgba(1,1,1,0.5)),
+	url("https://cdn.hipwallpaper.com/i/17/85/fiagrL.jpg");
+	background-size:cover;
+	background-position:center;
+}
+img{
+	max-height: 300px;
+	max-width: 300px;
+}

@@ -1,0 +1,138 @@
+<%layout('./layout.ejs')%>
+<div class='container-fluid'>
+<div class="row">
+ <div class="col-sm-6 col-md-5 ">
+    <div class="thumbnail">
+     <img src="<%-product.imagePath%>">
+      <div class="caption">
+        <h3><%-product.title%></h3>
+        <p class='genre'><%-product.genre%></p>
+        <p class="price">
+        $<%-product.price%>
+        <%if(login){%>
+         <a href="/add-to-cart/<%-product._id%>?pg=2&id=<%-product._id%>" class="btn btn-success" role="button">Add to cart</a>
+        <%}%>
+        <a href="#" class="btn btn-danger" role="button" onclick="myFunction()">System Requirements</a>
+        </p>
+      </div>
+    </div>
+    <div id='description'>
+    <hr/>
+       <h5><b>Description:</b></h5> <%-product.description%>
+    </div>
+      <div class="hidden"id='systemspecs'>
+      <hr/>
+      <b>Select OS:</b>
+          <a onclick="myFunction2()" href="#" class="btn btn-primary" role="button" ">Windows     <i class="fa fa-windows" aria-hidden="true"></i></a> 
+          <a onclick="myFunction3()" href="#" class="btn btn-primary" role="button" ">macOS  <i class="fa fa-apple" aria-hidden="true"></i></a>
+          <a onclick="myFunction4()" href="#" class="btn btn-primary" role="button"">chromeOS  <i class="fa fa-chrome" aria-hidden="true"></i></a>
+      <div id="os">     
+      </div>
+      <p></P>
+   </div>
+  </div>
+    <div class="col-sm-6 col-md-4 ">
+    <%if(login){%>
+    <form action="/product/<%-product._id%>/reviews" method='POST'>
+    <input type="text" value="<%-user.username%>" name="review[author]" hidden>
+    <input type="text" value="<%-user._id%>" name="review[authorId]" hidden> 
+    <div class="mb-3">
+		  <fieldset class="starability-basic" required>
+		  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+		  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+		  <label for="first-rate1" title="Terrible">1 star</label>
+		  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+		  <label for="first-rate2" title="Not good">2 stars</label>
+		  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+		  <label for="first-rate3" title="Average">3 stars</label>
+		  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+		  <label for="first-rate4" title="Very good">4 stars</label>
+		  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+		  <label for="first-rate5" title="Amazing">5 stars</label>
+		</fieldset>
+    </div>
+      <div class='mb-3'>
+       <label class="form-label" for='body'><span class='txt'>Review</span></label>
+       <textarea class="form-control" name="review[body]" id="body" cols="30" rows='10' required></textarea>
+       <p></P>
+       <button class="btn btn-success" type="submit">Submit</button>
+       <p></p>
+    </form>
+    <%}%>
+    <br>
+    <%if(reviews){%>
+    <%for(let r=0;r<reviews.length;r++){%>
+       <div class="thumbnail mb-3">
+          <h6><b><%-reviews[r].author%></b></h6>
+          <h6>
+            <p class="starability-result" data-rating="<%-reviews[r].rating%>">
+            </p>
+          </h6>
+          <p></P>
+          <%-reviews[r].body%>
+         <%if(login&&reviews[r].authorId==user._id){%>
+          <form action="/product/delete/<%-product._id%>/reviews/<%-reviews[r]._id%>" method="POST">
+          <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+         <%}%>
+       </div>
+    <%}%>
+   <%}%>
+ </div>
+ </div>
+</div>
+<script>
+ let i=0;
+ let j=0;
+ let k=0;
+ let l=0;
+ 
+function myFunction() {
+ if(i%2===0){
+  var element = document.getElementById("systemspecs");
+  element.classList.remove("hidden");
+  i++;
+ }
+  else{
+   var element = document.getElementById("systemspecs");
+  element.classList.add("hidden");
+  i++;
+  }
+}
+function myFunction2() {
+ if(j%2===0){
+  var element = document.getElementById("os");
+  element.innerHTML='<b>WINDOWS</b>:<%-product.windows%>';
+  j++;
+ }
+  else{
+   var element = document.getElementById("os");
+   element.innerHTML='';
+  j++;
+  }
+}
+function myFunction3() {
+ if(k%2===0){
+  var element = document.getElementById("os");
+  element.innerHTML='<b>MAC</b>:<%-product.mac%>';
+  k++;
+ }
+  else{
+   var element = document.getElementById("os");
+   element.innerHTML='';
+  k++;
+  }
+}
+function myFunction4() {
+ if(l%2===0){
+  var element = document.getElementById("os");
+  element.innerHTML='<b>CHROME</b>:<%-product.chrome%>';
+  l++;
+ }
+  else{
+   var element = document.getElementById("os");
+   element.innerHTML='';
+  l++;
+  }
+}
+</script>

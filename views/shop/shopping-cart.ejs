@@ -1,0 +1,52 @@
+<%layout('./layout.ejs')%>
+<% if(products&&products.length>0){%>
+   <div class="row">
+   <div class="col-sm-6 col-md-4 col-md-offset-3">
+    <ul class="list-group">
+      <%for(var i=0;i<products.length;i++){%>
+        <li class="list-group-item">
+        <span class="badge"><%-products[i].qty%></span>
+        <strong><%-products[i].item.title%></strong>
+        <span class="label label-success">$<%-products[i].price%></span>
+        <div class="btn-group">
+          <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action</button>
+          <ul class="dropdown-menu">
+            <li><a href="/reduce/<%-products[i].item._id%>">Reduce by 1</a></li>
+            <li><a href="/remove/<%-products[i].item._id%>">Remove All</a></li>
+          </ul>
+        </div>
+      </li>
+    <%}%>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+    <strong><b><span class="label label-danger" id="total">Total: $<%-totalPrice%></span></b></strong>
+  </div>
+</div>
+<p></p>
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+    <form action="/payment" method="POST"> 
+              <script
+                src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="<%-key%>" 
+                data-amount="<%-totalPrice%>" 
+                data-currency="dollar"  
+                data-name="Debjyoti Chattopadhyay" 
+                data-description="Payment" 
+                data-locale="auto" > 
+              </script> 
+    </form>
+  </div>
+</div>
+<%}%>
+<%if(!products){%>
+  <div class="row">
+  <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+    <h2>No items in cart</h2>
+  </div>
+</div>
+<%}%>
